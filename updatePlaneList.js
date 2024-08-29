@@ -11,17 +11,17 @@ const rescueProviders = [
 let rescueHelicopters = [];
 
 export function updatePlaneList() {
-    const planes = loadPlanes();
-    console.log(planes);
-    const planeList = document.getElementById('planeList');
-    planeList.innerHTML = '';
+    const aircraftRegister = loadPlanes();
+    console.log(aircraftRegister);
+    const aircraftList = document.getElementById('aircraftList');
+    aircraftList.innerHTML = '';
 
-    planes.forEach((aircraft, index) => {
+    aircraftRegister.forEach((status, registration) => {
         const aircraftItem = document.createElement('div');
         aircraftItem.className = 'aircraft-item';
 
         const regSpan = document.createElement('span');
-        regSpan.textContent = aircraft.registration || aircraft.reg;
+        regSpan.textContent = registration;
         aircraftItem.appendChild(regSpan);
 
         const statusActionContainer = document.createElement('div');
@@ -29,12 +29,11 @@ export function updatePlaneList() {
 
         const dotSpan = document.createElement('span');
         dotSpan.className = 'dot';
-        const isOnline = getPlaneOnlineStatus(aircraft.registration || aircraft.reg);
-        dotSpan.classList.add(isOnline ? 'online' : 'offline');
+        dotSpan.classList.add(status === 'online' ? 'online' : 'offline');
         statusActionContainer.appendChild(dotSpan);
 
         aircraftItem.appendChild(statusActionContainer);
-        planeList.appendChild(aircraftItem);
+        aircraftList.appendChild(aircraftItem);
     });
 }
 
