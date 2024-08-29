@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aircraft Tracker</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+        #map {
+            flex: 1;
+            min-height: 100%;
+        }
+        #sidebar {
+            width: 300px;
+            padding: 20px;
+            background-color: #f0f0f0;
+            overflow-y: auto;
+            box-sizing: border-box;
+        }
+        #planeList {
+            margin-bottom: 20px;
+        }
+        .aircraft-item {
+            margin-bottom: 10px;
+            padding: 5px;
+            background-color: #fff;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        #addPlaneForm {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        #reg {
+            flex: 1;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div id="sidebar">
+    <h1>Aircraft Tracker</h1>
+    <form id="addPlaneForm">
+        <input type="text" id="reg" placeholder="Registration (e.g., HB-XXX)" required>
+        <button type="submit">Add</button>
+    </form>
+    <div id="planeList"></div>
+    <button id="centerSwitzerlandBtn">Center map</button>
+    <button id="resetPlanes">Reset</button>
+</div>
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script type="module" src="script.js"></script>
+</body>
+</html>
