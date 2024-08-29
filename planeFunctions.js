@@ -42,4 +42,7 @@ export function isHelicopter(registration) {
 
 export function clearAllPlanes() {
     aircraftRegister.clear();
+}
+
+
 
