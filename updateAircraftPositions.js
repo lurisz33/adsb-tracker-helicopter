@@ -5,10 +5,10 @@ const radiusNm = 250;
 
 export async function updateAircraftPositions(map, markers) {
     const aircraftRegister = loadPlanes();
-    const aircraftRegistrations = Set.from(aircraftRegister.keys());
+    const aircraftRegistrations = new Set(aircraftRegister.keys());
 
     try {
-        const response = await fetch(`https://api.adsb.one/v2/point/${SWITZERLAND_CENTER.lat}/${SWITZERLAND_CENTER.lon}/${RADIUS_NM}`);
+        const response = await fetch(`https://api.adsb.one/v2/point/${switzerlandCenter.lat}/${switzerlandCenter.lon}/${radiusNm}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -19,7 +19,7 @@ export async function updateAircraftPositions(map, markers) {
 
             data.ac.forEach(aircraft => {
                 const reg = aircraft.r ? aircraft.r.trim().toUpperCase() : null;
-                if (reg && aircraftRegistrations.includes(reg)) {
+                if (reg && aircraftRegistrations.has(reg)) {
                     onlineAircraft.add(reg);
                     aircraftRegister.set(reg, 'online');
                     if (aircraft.lat && aircraft.lon) {
