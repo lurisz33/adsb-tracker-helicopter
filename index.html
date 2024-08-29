@@ -11,39 +11,103 @@
             margin: 0;
             padding: 0;
         }
+
         body {
             font-family: Arial, sans-serif;
             display: flex;
         }
+
         #map {
             flex: 1;
             min-height: 100%;
         }
+
         #sidebar {
             width: 300px;
             padding: 20px;
             background-color: #f0f0f0;
             overflow-y: auto;
             box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
         }
-        #planeList {
+
+        h1 {
+            margin-top: 0;
             margin-bottom: 20px;
         }
-        .aircraft-item {
-            margin-bottom: 10px;
-            padding: 5px;
-            background-color: #fff;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-        }
+
         #addPlaneForm {
             display: flex;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
+
         #reg {
             flex: 1;
+            padding: 5px;
             margin-right: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        #aircraftList {
+            margin-bottom: 20px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .aircraft-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            background-color: #fff;
+            margin-bottom: 5px;
+            border-radius: 4px;
+            color: black;
+        }
+
+        .status-action-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .online {
+            background-color: #4CAF50;
+        }
+
+        .offline {
+            background-color: #F44336;
+        }
+
+        #centerSwitzerlandBtn, #resetPlanes {
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        #resetPlanes {
+            background-color: #F44336;
+        }
+
+        #centerSwitzerlandBtn:hover, #resetPlanes:hover {
+            opacity: 0.9;
         }
     </style>
 </head>
@@ -54,7 +118,7 @@
         <input type="text" id="reg" placeholder="Registration (e.g., HB-XXX)" required autocomplete="off">
         <button type="submit">Add</button>
     </form>
-    <div id="planeList"></div>
+    <div id="aircraftList"></div>
     <button id="centerSwitzerlandBtn">Center map</button>
     <button id="resetPlanes">Reset</button>
 </div>
