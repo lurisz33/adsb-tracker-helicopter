@@ -32,6 +32,15 @@ export function updatePlaneList() {
         dotSpan.classList.add(status === 'online' ? 'online' : 'offline');
         statusActionContainer.appendChild(dotSpan);
 
+        const removeButton = document.createElement('button');
+        removeButton.className = 'remove-button';
+        removeButton.innerHTML = `<img src="./assets/delete.svg" alt="Remove" class="remove-icon">`;
+        removeButton.addEventListener('click', () => {
+            removeAircraft(registration);
+            updatePlaneList();
+        });
+        statusActionContainer.appendChild(removeButton);
+
         aircraftItem.appendChild(statusActionContainer);
         aircraftList.appendChild(aircraftItem);
     });
