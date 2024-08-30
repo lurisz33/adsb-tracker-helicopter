@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', async (event) => {
 async function stateMachine() {
     switch (state) {
         case 'timeout':
-            await delay(2000);
+            await delay(1000);
             state = 'updating';
             await stateMachine();
             break;

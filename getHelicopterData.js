@@ -1,6 +1,6 @@
 export async function getHelicopterData() {
     try {
-        const response = await fetch('http://localhost:3000/helicopter-registrations');
+        const response = await fetch('/api/helicopter-registrations');
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
         }

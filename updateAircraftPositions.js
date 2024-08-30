@@ -1,9 +1,10 @@
-import { loadPlanes, isHelicopter, getPlaneOnlineStatus } from "./planeFunctions.js";
+import { loadPlanes, isHelicopter } from "./planeFunctions.js";
 
 const switzerlandCenter = { lat: 46.8182, lon: 8.2275 };
 const radiusNm = 250;
 
 export async function updateAircraftPositions(map, markers) {
+    console.log('updateAircraftPositions called at:', new Date().toISOString());
     const aircraftRegister = loadPlanes();
     const aircraftRegistrations = new Set(aircraftRegister.keys());
 
