@@ -71,6 +71,33 @@
             color: black;
         }
 
+        .aircraft-type-icon,
+        .operator-logo-container {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .operator-logo-placeholder {
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+        }
+
+        .aircraft-icon,
+        .operator-logo {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .operator-logo-container {
+            margin-left: -5px; /* Adjust this value to control overlap with aircraft icon */
+        }
+
         .status-action-container {
             display: flex;
             align-items: center;
@@ -126,6 +153,48 @@
         #centerSwitzerlandBtn:hover, #resetPlanes:hover {
             opacity: 0.9;
         }
+
+        #rescueProviderList {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #rescueProviderList div {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #rescueProviderList div.active {
+            background-color: #90EE90;
+        }
+
+        .aaa-logo {
+            width: 80px;
+            height: auto;
+        }
+
+        .airGlaciers-logo {
+            width: 100px;
+            height: auto;
+        }
+
+        .airZermatt-logo {
+            width: 90px;
+            height: auto;
+        }
+
+        .rega-logo {
+            width: 70px;
+            height: auto;
+        }
     </style>
 </head>
 <body>
@@ -135,9 +204,23 @@
         <input type="text" id="reg" placeholder="Registration (e.g., HB-XXX)" required autocomplete="off">
         <button type="submit">Add</button>
     </form>
+    <div id="rescueProviderList">
+        <div id="aaa">
+            <img src="./assets/aaaLogo.svg" alt="Alpine Air Ambulance logo" class="aaa-logo">
+        </div>
+        <div id="airGlaciers">
+            <img src="./assets/airGlaciersLogo.png" alt="Air Glaciers logo" class="airGlaciers-logo">
+        </div>
+        <div id="airZermatt">
+            <img src="./assets/airZermattLogo.png" alt="Air Zermatt logo" class="airZermatt-logo">
+        </div>
+        <div id="rega">
+            <img src="./assets/regaLogo.svg" alt="Rega logo" class="rega-logo">
+        </div>
+    </div>
     <div id="aircraftList"></div>
     <button id="centerSwitzerlandBtn">Center map</button>
-    <button id="resetPlanes">Reset</button>
+    <!--<button id="resetPlanes">Reset</button>-->
 </div>
 <div id="map"></div>
 
