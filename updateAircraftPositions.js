@@ -1,14 +1,22 @@
 import { loadPlanes, isHelicopter, getPlaneOnlineStatus } from "./planeFunctions.js";
+import {getUserLocation} from "./getUserLocation.js";
 
 const switzerlandCenter = { lat: 46.8182, lon: 8.2275 };
 const radiusNm = 250;
 
 export async function updateAircraftPositions(map, markers) {
-    const aircraftRegister = loadPlanes();
-    const aircraftRegistrations = new Set(aircraftRegister.keys());
-
     try {
-        const response = await fetch(`https://api.adsb.one/v2/point/${switzerlandCenter.lat}/${switzerlandCenter.lon}/${radiusNm}`);
+        const userLocation = await getUserLocation();
+        const center = { lat: userLocation.latitude, lon: userLocation.longitude };
+
+        // Add a marker for the user's location
+        L.marker([center.lat, center.lon]).addTo(map)
+            .bindPopup('Your Location')
+
+        const aircraftRegister = loadPlanes();
+        const aircraftRegistrations = new Set(aircraftRegister.keys());
+
+        const response = await fetch(`https://api.adsb.one/v2/point/${center.lat}/${center.lon}/${radiusNm}`);
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
