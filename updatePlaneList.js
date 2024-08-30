@@ -1,8 +1,9 @@
 import { loadPlanes, removeAircraft, getPlaneOnlineStatus, addPlane } from "./planeFunctions.js";
 import { getRescueHelicopterData } from "./getRescueHelicopterData.js";
+import { isHelicopter } from "./planeFunctions.js";
 
-const rescueProviders = [
-    { name: 'Schweiz.Luft-Ambulanz AG', logo: './assets/regaLogo.svg' },
+const rescueProvidersLogoPaths = [
+    { name: 'Schweiz.Luft-Ambulanz AG (REGA)', logo: './assets/regaLogo.svg' },
     { name: 'Air Zermatt AG', logo: '/assets/airZermattLogo.png' },
     { name: 'Air-Glaciers SA', logo: './assets/airGlaciersLogo.png' },
     { name: 'Lions Air Skymedia AG', logo: './assets/aaaLogo.svg' }
@@ -19,6 +20,32 @@ export function updatePlaneList() {
     aircraftRegister.forEach((status, registration) => {
         const aircraftItem = document.createElement('div');
         aircraftItem.className = 'aircraft-item';
+
+        // Add helicopter or plane icon
+        const aircraftTypeSpan = document.createElement('span');
+        aircraftTypeSpan.className = 'aircraft-type-icon';
+        const aircraftTypeIcon = document.createElement('img');
+        aircraftTypeIcon.src = isHelicopter(registration) ? './assets/helicopter.svg' : './assets/plane.svg';
+        aircraftTypeIcon.alt = isHelicopter(registration) ? 'Helicopter Icon' : 'Plane Icon';
+        aircraftTypeIcon.className = 'aircraft-icon';
+        aircraftTypeSpan.appendChild(aircraftTypeIcon);
+        aircraftItem.appendChild(aircraftTypeSpan);
+
+        const logoSpan = document.createElement('span');
+        logoSpan.className = 'operator-logo-container';
+        const logoSrc = getLogoForRegistration(registration);
+        if (logoSrc) {
+            const logo = document.createElement('img');
+            logo.src = logoSrc;
+            logo.alt = 'Operator Logo';
+            logo.className = 'operator-logo';
+            logoSpan.appendChild(logo);
+        } else {
+            const placeholder = document.createElement('div');
+            placeholder.className = 'operator-logo-placeholder';
+            logoSpan.appendChild(placeholder);
+        }
+        aircraftItem.appendChild(logoSpan);
 
         const regSpan = document.createElement('span');
         regSpan.textContent = registration;
@@ -55,6 +82,14 @@ function removeAllRescueHelicopters() {
 export async function initializeRescueHelicopters() {
     rescueHelicopters = await getRescueHelicopterData();
     removeAllRescueHelicopters();
+}
+function getLogoForRegistration(registration) {
+    const rescueHelicopter = rescueHelicopters.find(heli => heli.registration === registration);
+    if (rescueHelicopter) {
+        const providerLogo = rescueProvidersLogoPaths.find(provider => provider.name === rescueHelicopter.operator);
+        return providerLogo ? providerLogo.logo : null;
+    }
+    return null;
 }
 
 
