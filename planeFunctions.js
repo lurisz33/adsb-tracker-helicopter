@@ -1,4 +1,5 @@
 import {getHelicopterData} from "./getHelicopterData.js";
+import {getRescueHelicopterData} from "./getRescueHelicopterData.js";
 
 let helicopterRegistrations = new Set();
 let aircraftRegister = new Map();
@@ -24,6 +25,41 @@ export function getPlaneOnlineStatus(registration) {
 export function addPlane(registration) {
     if (!aircraftRegister.has(registration)) {
         aircraftRegister.set(registration, 'offline');
+    }
+}
+
+export async function addMultipleAircraftFromProvider(providerId) {
+    const rescueHelicopters = await getRescueHelicopterData();
+    const operatorName = getOperatorName(providerId);
+    rescueHelicopters.forEach(helicopter => {
+        if (helicopter.operator === operatorName) {
+            addPlane(helicopter.registration);
+        }
+    });
+}
+
+export async function removeMultipleAircraftFromProvider(providerId) {
+    const rescueHelicopters = await getRescueHelicopterData();
+    const operatorName = getOperatorName(providerId);
+    rescueHelicopters.forEach(helicopter => {
+        if (helicopter.operator === operatorName) {
+            removeAircraft(helicopter.registration);
+        }
+    });
+}
+
+function getOperatorName(providerId) {
+    switch(providerId) {
+        case 'aaa':
+            return 'Lions Air Skymedia AG';
+        case 'airGlaciers':
+            return 'Air-Glaciers SA';
+        case 'airZermatt':
+            return 'Air Zermatt AG';
+        case 'rega':
+            return 'Schweiz.Luft-Ambulanz AG (REGA)';
+        default:
+            return '';
     }
 }
 

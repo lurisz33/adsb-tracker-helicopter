@@ -6,6 +6,7 @@ import {updateAircraftPositions} from "./updateAircraftPositions.js";
 import {delay} from "./delay.js";
 import {getHelicopterData} from "./getHelicopterData.js";
 import {clearAllPlanes} from "./planeFunctions.js";
+import {addRescueProviderFunctions} from './chooseRescueProvider.js';
 
 const map = initMap();
 let markers = {};
@@ -31,30 +32,31 @@ document.getElementById('addPlaneForm').addEventListener('submit', (e) => {
 
 document.getElementById('centerSwitzerlandBtn').addEventListener('click', () => centerOnSwitzerland(map));
 
-document.getElementById('resetPlanes').addEventListener('click', function () {
-    clearAllPlanes();
-    updatePlaneList();
-})
+// document.getElementById('resetPlanes').addEventListener('click', function () {
+//     clearAllPlanes();
+//     updatePlaneList();
+// })
 
 document.addEventListener('DOMContentLoaded', async (event) => {
     centerOnSwitzerland(map);
-    loadHelicopterData();
+    await loadHelicopterData();
     await getHelicopterData();
     await initializeRescueHelicopters();
-    stateMachine();
+    await addRescueProviderFunctions();
+    await stateMachine();
 });
 
 async function stateMachine() {
     switch (state) {
         case 'timeout':
-            await delay(1000);
+            await delay(2000);
             state = 'updating';
-            stateMachine();
+            await stateMachine();
             break;
         case 'updating':
             await updateSite();
             state = 'timeout';
-            stateMachine();
+            await stateMachine();
             break;
     }
 }
